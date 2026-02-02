@@ -1,9 +1,16 @@
 require('dotenv').config();
 
+// Validate required environment variables
+if (!process.env.MONGO_URI) {
+  console.error('❌ FATAL ERROR: MONGO_URI environment variable is not defined');
+  console.error('Please set MONGO_URI in your .env file or environment variables');
+  process.exit(1);
+}
+
 module.exports = {
   port: process.env.PORT || 5000,
   nodeEnv: process.env.NODE_ENV || 'development',
-  mongoUri: process.env.MONGODB_URI || 'mongodb://localhost:27017/ads-platform',
+  mongoUri: process.env.MONGO_URI,
   jwt: {
     secret: process.env.JWT_SECRET || 'default-secret-key',
     refreshSecret: process.env.JWT_REFRESH_SECRET || 'default-refresh-secret',

@@ -1,3 +1,6 @@
+// Load environment variables first, before any other imports
+require('dotenv').config();
+
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -14,9 +17,6 @@ const analyticsRoutes = require('./routes/analytics');
 
 // Initialize express app
 const app = express();
-
-// Connect to database
-connectDatabase();
 
 // Middleware
 app.use(helmet()); // Security headers
@@ -46,12 +46,25 @@ app.use(notFound);
 // Error handler (must be last)
 app.use(errorHandler);
 
-// Start server
-const PORT = config.port;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT} in ${config.nodeEnv} mode`);
-  console.log(`📍 API available at http://localhost:${PORT}/api`);
-});
+// Start server function
+const startServer = async () => {
+  try {
+    // Connect to database first
+    await connectDatabase();
+    
+    // Start server only after successful DB connection
+    const PORT = config.port;
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT} in ${config.nodeEnv} mode`);
+    });
+  } catch (error) {
+    console.error('❌ Failed to start server:', error.message);
+    process.exit(1);
+  }
+};
+
+// Start the server
+startServer();
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
