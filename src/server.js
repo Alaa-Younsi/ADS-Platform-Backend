@@ -20,7 +20,25 @@ const app = express();
 
 // Middleware
 app.use(helmet()); // Security headers
-app.use(cors({ origin: config.cors.origin, credentials: true })); // CORS
+
+// CORS configuration - allow multiple origins
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    
+    if (config.cors.origins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log(`🚫 Blocked CORS request from origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 app.use(morgan(config.nodeEnv === 'development' ? 'dev' : 'combined')); // Logging
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
