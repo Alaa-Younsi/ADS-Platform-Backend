@@ -338,9 +338,9 @@ This project showcases proficiency in:
 - ✅ Token-based authentication
 - ✅ Production deployment practices
 
-## 📝 License
+## 📄 License
 
-MIT License - This is a portfolio/demonstration project.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 About
 
