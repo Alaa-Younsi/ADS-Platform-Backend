@@ -13,6 +13,9 @@ This is a production-ready REST API built as a portfolio project to demonstrate 
 
 This backend API powers a comprehensive advertising campaign management system with features for user authentication, campaign tracking, analytics, and role-based access control. The project demonstrates clean architecture, security best practices, and production-ready code.
 
+![Homepage](./screenshots/screenshot1.png)
+![Services Section](./screenshots/screenshot2.png)
+
 **🎯 Purpose:** Portfolio/Demonstration Project  
 **📅 Status:** Active Development  
 **🌐 Live API:** [https://ads-platform-backend-9eej.onrender.com](https://ads-platform-backend-9eej.onrender.com)
